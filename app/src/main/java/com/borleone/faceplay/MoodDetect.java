@@ -36,6 +36,7 @@ public class MoodDetect extends Activity {
         setContentView(R.layout.mood_detect);
         iv = (ImageView) findViewById(R.id.imageView1);
         Button camButton = (Button) this.findViewById(R.id.button);
+        Button musicButton = (Button) this.findViewById(R.id.button1);
 
         camButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -46,7 +47,15 @@ public class MoodDetect extends Activity {
                 startActivityForResult(i, CAMERA_REQUEST);
             }
         });
+
+        musicButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent k = new Intent(MoodDetect.this, MusicList.class);
+                startActivity(k);
+            }
+        });
     }
+
 
     private File getOutputPhotoFile() {
         File directory = new File(Environment.getExternalStoragePublicDirectory(
@@ -58,8 +67,7 @@ public class MoodDetect extends Activity {
             }
         }
         String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss", Locale.US).format(new Date());
-        return new File(directory.getPath() + File.separator + "IMG_"
-                + timeStamp + ".jpg");
+        return new File(directory.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -89,10 +97,10 @@ public class MoodDetect extends Activity {
     private void showPhoto(Uri photoUri) {
         String filePath = photoUri.getEncodedPath();
         File imageFile = new File(filePath);
-        if (imageFile.exists()){
+        if (imageFile.exists()) {
             Drawable oldDrawable = iv.getDrawable();
             if (oldDrawable != null) {
-                ((BitmapDrawable)oldDrawable).getBitmap().recycle();
+                ((BitmapDrawable) oldDrawable).getBitmap().recycle();
             }
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             BitmapDrawable drawable = new BitmapDrawable(this.getResources(), bitmap);
