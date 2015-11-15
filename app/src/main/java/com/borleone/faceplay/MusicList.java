@@ -11,8 +11,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Pushkar Borle on 11/14/2015.
@@ -58,13 +62,15 @@ public class MusicList extends Activity {
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
                 String thisDuration = musicCursor.getString(durationColumn);
+                SimpleDateFormat sdf = new SimpleDateFormat("mm:ss", Locale.getDefault());
+                String duration = sdf.format(new Date(Long.parseLong(thisDuration) - TimeZone.getDefault().getRawOffset()));
                 //songList.add(new Song(thisId, thisTitle, thisArtist));
                 System.out.println(thisTitle);
 
                 map.put(KEY_ID, Long.toString(thisId));
                 map.put(KEY_TITLE, thisTitle);
                 map.put(KEY_ARTIST, thisArtist);
-                map.put(KEY_DURATION, thisDuration);
+                map.put(KEY_DURATION, duration);
                 //map.put(KEY_THUMB_URL, parser.getValue(e, KEY_THUMB_URL));
 
                 // adding HashList to ArrayList
