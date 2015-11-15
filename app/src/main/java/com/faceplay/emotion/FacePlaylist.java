@@ -1,11 +1,11 @@
 package com.faceplay.emotion;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by Ajay on 11/15/2015.
  */
-public class FacePlaylist {
+public class FacePlaylist implements Serializable{
     private String imageURL;
     private String name;
     private int numberOfSongs;

@@ -25,9 +25,11 @@ import com.faceplay.emotion.FacePlaylist;
 import com.faceplay.emotion.ProjectOxfordEmotionRecognizer;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -42,13 +44,14 @@ public class MoodDetect extends Activity {
     Uri fileUri = null;
     private ImageView iv = null;
     private static final int REQUEST_WRITE_STORAGE = 112;
+    List<FacePlaylist> playList = new ArrayList<FacePlaylist>();
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean hasPermission = (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-        if (hasPermission)
-        {
+        if (hasPermission) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_WRITE_STORAGE);
@@ -57,6 +60,8 @@ public class MoodDetect extends Activity {
         iv = (ImageView) findViewById(R.id.imageView1);
         Button camButton = (Button) this.findViewById(R.id.button);
         Button musicButton = (Button) this.findViewById(R.id.button1);
+        Button playListButton = (Button) this.findViewById(R.id.button2);
+
 
         camButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -74,6 +79,20 @@ public class MoodDetect extends Activity {
                 startActivity(k);
             }
         });
+
+        playListButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(MoodDetect.this, SpotifyList.class);
+                //intent.putExtra("List", playList);
+
+                Bundle informacion = new Bundle();
+                informacion.putSerializable("List", (Serializable) playList);
+                intent.putExtras(informacion);
+//                intent.putStringArrayListExtra("list", playList);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -114,7 +133,10 @@ public class MoodDetect extends Activity {
                     e.printStackTrace();
                 }
                 List<FacePlaylist> playListForMood = EmotionUtil.getPlayListForMood(recog.getEmotion().getEmotion());
-                Toast.makeText(this.getParent(), playListForMood+"", Toast.LENGTH_LONG).show();
+                Log.e("playList", "" + playListForMood.size());
+                playList=playListForMood;
+                //playListForMood.get(0).getImageURL();
+                Toast.makeText(this, recog.getEmotion().getEmotion() + "", Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
             } else {
@@ -143,14 +165,11 @@ public class MoodDetect extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case REQUEST_WRITE_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //reload my activity with permission granted
-                } else
-                {
+                } else {
                     Toast.makeText(this.getParent(), "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
                 }
             }

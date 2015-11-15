@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
                 //songList.add(new Song(thisId, thisTitle, thisArtist));
-                System.out.println(cnt++ + thisTitle);
+                //System.out.println(cnt++ + thisTitle);
             }
             while (musicCursor.moveToNext());
         }
