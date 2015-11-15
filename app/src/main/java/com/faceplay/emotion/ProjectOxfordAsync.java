@@ -1,12 +1,20 @@
 package com.faceplay.emotion;
 
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.util.Pair;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -19,42 +27,45 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-class ProjectOxfordAsync extends AsyncTask<URL, String, String> {
+class ProjectOxfordAsync extends AsyncTask<URL, URL, String> {
 
     private String response;
     private String APIKey = "b4f6718ebe2145a1b53196824296aff3";
 
-
+    String responseString = new String();
     @Override
     protected String doInBackground(URL... uri) {
-        String responseString = null;
+
         try {
             URL projectOxfordURL = new URL("https://api.projectoxford.ai/emotion/v1.0/recognize");
             for(URL myurl:uri){
+                Log.d("FacePlay", "URL " + projectOxfordURL);
+                String url = "https://api.projectoxford.ai/emotion/v1.0/recognize";
+                URL obj = new URL(url);
+                HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-                HttpURLConnection conn = (HttpURLConnection) projectOxfordURL.openConnection();
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
+                String path =  "/sdcard/Download/Image.jpg";
+                byte[] extractBytes = EmotionUtil.extractBytes(path);
+                con.setRequestMethod("POST");
+                con.setRequestMethod("POST");
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                con.setRequestProperty("Ocp-Apim-Subscription-Key", "b4f6718ebe2145a1b53196824296aff3");
+                con.setRequestProperty("Content-Type", "application/octet-stream");
+                con.setRequestProperty("Content-Length", extractBytes.length+"");
 
-                List<Pair> params = new ArrayList<Pair>();
-                params.add(new Pair("Ocp-Apim-Subscription-Key", APIKey));
-                params.add(new Pair("url", myurl.getPath()));
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getQuery(params));
+                OutputStream os = con.getOutputStream();
+                DataOutputStream writer = new DataOutputStream(os);
+                writer.write(extractBytes);
                 writer.flush();
                 writer.close();
                 os.close();
+                if (con.getResponseCode() == HttpsURLConnection.HTTP_OK) {
 
-                conn.connect();
-                if (conn.getResponseCode() == HttpsURLConnection.HTTP_OK) {
-
-                    BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    while ((responseString =br.readLine()) != null) {
-                        response+= responseString;
+                    BufferedReader br=new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    while ((response =br.readLine()) != null) {
+                        Log.d("FacePlay", "Line " + response);
+                        responseString+= response;
                     }
                 } else {
                     response = "FAILED"; // See documentation for more info on response handling
@@ -63,31 +74,12 @@ class ProjectOxfordAsync extends AsyncTask<URL, String, String> {
         } catch (IOException e) {
             Log.d("",e.getStackTrace()+"");
         }
+        Log.d("FacePlay", "ResponseString " + responseString);
         return responseString;
     }
 
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-
+        Log.d("Face",responseString);
     }
-
-    private String getQuery(List<Pair> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-
-        for (Pair pair : params)
-        {
-            if (first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode((String) pair.first, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode((String) pair.second, "UTF-8"));
-        }
-
-        return result.toString();
-    }
-
 }
