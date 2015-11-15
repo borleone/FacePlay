@@ -59,7 +59,7 @@ public class MoodDetect extends Activity {
         setContentView(R.layout.mood_detect);
         iv = (ImageView) findViewById(R.id.imageView1);
         Button camButton = (Button) this.findViewById(R.id.button);
-        Button musicButton = (Button) this.findViewById(R.id.button1);
+//        Button musicButton = (Button) this.findViewById(R.id.button1);
         Button playListButton = (Button) this.findViewById(R.id.button2);
 
 
@@ -73,12 +73,14 @@ public class MoodDetect extends Activity {
             }
         });
 
+/*
         musicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent k = new Intent(MoodDetect.this, MusicList.class);
                 startActivity(k);
             }
         });
+*/
 
         playListButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
