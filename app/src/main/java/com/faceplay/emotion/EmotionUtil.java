@@ -1,5 +1,9 @@
 package com.faceplay.emotion;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -25,12 +29,20 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import kaaes.spotify.webapi.android.SpotifyApi;
+import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.PlaylistSimple;
+import kaaes.spotify.webapi.android.models.PlaylistsPager;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by Ajay on 11/14/2015.
  */
 public class EmotionUtil {
 
-    public static String ANGER = "anger";
+    public static String ANGER = "anger"; //
     public static String CONTEMPT = "CONTEMPT";
     public static String DISGUST = "disgust";
     public static String FEAR = "fear";
@@ -88,6 +100,38 @@ public class EmotionUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<FacePlaylist> getPlayListForMood(String mood){
+        final List<FacePlaylist> playlist = new ArrayList<>();
+        SpotifyApi api = new SpotifyApi();
+
+        SpotifyService spotify = api.getService();
+
+        spotify.searchPlaylists("Happy", new Callback<PlaylistsPager>() {
+            @Override
+            public void success(PlaylistsPager playlistsPager, Response response) {
+                Log.d("Face",playlistsPager.playlists.items.get(0).uri+"");
+                List<PlaylistSimple> items = playlistsPager.playlists.items;
+                for (PlaylistSimple item:items) {
+                    FacePlaylist list = new FacePlaylist(item.images.get(0).url,item.name,item.tracks.total,item.uri);
+                    playlist.add(list);
+                    Log.d("Face", list.toString());
+                }
+
+                /*Intent intent = new Intent(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH);
+                intent.setData(Uri.parse(
+                        playlistsPager.playlists.items.get(0).uri));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);*/
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+        return playlist;
     }
 
 }

@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.faceplay.emotion.EmotionUtil;
+import com.faceplay.emotion.FacePlaylist;
 import com.faceplay.emotion.ProjectOxfordEmotionRecognizer;
 
 import java.io.File;
@@ -27,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -110,7 +113,8 @@ public class MoodDetect extends Activity {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(this, recog.getEmotion().getEmotion(), Toast.LENGTH_LONG).show();
+                List<FacePlaylist> playListForMood = EmotionUtil.getPlayListForMood(recog.getEmotion().getEmotion());
+                Toast.makeText(this.getParent(), playListForMood+"", Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
             } else {
