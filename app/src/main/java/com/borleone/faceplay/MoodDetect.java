@@ -134,9 +134,56 @@ public class MoodDetect extends Activity {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                List<FacePlaylist> playListForMood = EmotionUtil.getPlayListForMood(recog.getEmotion().getEmotion());
+                String emo = recog.getEmotion().getEmotion();
+                Double scr = recog.getEmotion().getScore();
+                if (emo.equals("happiness")) {
+                    if (scr % 0.001 >= 8)
+                        emo = "excite";
+                    else if (scr % 0.001 >= 5)
+                        emo = "energy";
+                    else if (scr % 0.001 < 3)
+                        emo = "joy";
+                }
+                if (emo.equals("neutral")) {
+                    if (scr % 0.001 >= 7)
+                        emo = "classical";
+                    else if (scr % 0.001 >= 4)
+                        emo = "peace";
+                    else if (scr % 0.001 < 3)
+                        emo = "calm";
+                }
+                if (emo.equals("anger")) {
+                    if (scr % 0.001 >= 7)
+                        emo = "metal";
+                    else if (scr % 0.001 >= 4)
+                        emo = "mad";
+                }
+                if (emo.equals("sadness")) {
+                    if (scr % 0.001 >= 7)
+                        emo = "blues";
+                    else if (scr % 0.001 >= 5)
+                        emo = "soul";
+                    else if (scr % 0.001 < 3)
+                        emo = "heartbreak";
+                }
+                if (emo.equals("disgust")) {
+                    if (scr % 0.001 >= 6)
+                        emo = "horror";
+                    else if (scr % 0.001 >= 3)
+                        emo = "sick";
+                }
+                if (emo.equals("surprise")) {
+                    if (scr % 0.001 >= 6)
+                        emo = "wonder";
+                }
+                if (emo.equals("fear")) {
+                    if (scr % 0.001 >= 6)
+                        emo = "scare";
+                }
+
+                List<FacePlaylist> playListForMood = EmotionUtil.getPlayListForMood(emo);
                 Log.e("playList", "" + playListForMood.size());
-                playList=playListForMood;
+                playList = playListForMood;
                 //playListForMood.get(0).getImageURL();
                 Toast.makeText(this, recog.getEmotion().getEmotion() + "", Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
