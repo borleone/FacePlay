@@ -1,29 +1,14 @@
 package com.faceplay.emotion;
 
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
-import android.util.Pair;
-
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -44,8 +29,8 @@ class ProjectOxfordAsync extends AsyncTask<URL, URL, String> {
                 URL obj = new URL(url);
                 HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-                String path =  "/sdcard/Download/Image.jpg";
-                byte[] extractBytes = EmotionUtil.extractBytes(path);
+                //String path =  "/sdcard/Download/Image.jpg";
+                byte[] extractBytes = EmotionUtil.extractBytes(myurl.getPath());
                 con.setRequestMethod("POST");
                 con.setRequestMethod("POST");
                 con.setDoInput(true);

@@ -17,9 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.faceplay.emotion.ProjectOxfordEmotionRecognizer;
@@ -103,14 +101,16 @@ public class MoodDetect extends Activity {
                     Toast.makeText(this, "Image saved successfully in: " + data.getData(),
                             Toast.LENGTH_LONG).show();
                 }
+                System.out.println(photoUri.toString());
+                System.out.println(photoUri.getEncodedPath().toString());
                 showPhoto(photoUri);
                 ProjectOxfordEmotionRecognizer recog = new ProjectOxfordEmotionRecognizer();
                 try {
-                    recog.submitImage(new URL(photoUri.getEncodedPath()));
+                    recog.submitImage(new URL(photoUri.toString()));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(this.getParent(), recog.getEmotion().getEmotion(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, recog.getEmotion().getEmotion(), Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
             } else {
