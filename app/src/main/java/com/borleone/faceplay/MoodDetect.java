@@ -137,47 +137,47 @@ public class MoodDetect extends Activity {
                 String emo = recog.getEmotion().getEmotion();
                 Double scr = recog.getEmotion().getScore();
                 if (emo.equals("happiness")) {
-                    if (scr % 0.001 >= 8)
+                    if (scr * 100 % 10 >= 8)
                         emo = "excite";
-                    else if (scr % 0.001 >= 5)
+                    else if (scr * 100 % 10 >= 5)
                         emo = "energy";
-                    else if (scr % 0.001 < 3)
+                    else if (scr * 100 % 10 < 3)
                         emo = "joy";
                 }
                 if (emo.equals("neutral")) {
-                    if (scr % 0.001 >= 7)
+                    if (scr * 100 % 10 >= 7)
                         emo = "classical";
-                    else if (scr % 0.001 >= 4)
+                    else if (scr * 100 % 10 >= 4)
                         emo = "peace";
-                    else if (scr % 0.001 < 3)
+                    else if (scr * 100 % 10 < 3)
                         emo = "calm";
                 }
                 if (emo.equals("anger")) {
-                    if (scr % 0.001 >= 7)
+                    if (scr * 100 % 10 >= 7)
                         emo = "metal";
-                    else if (scr % 0.001 >= 4)
+                    else if (scr * 100 % 10 >= 4)
                         emo = "mad";
                 }
                 if (emo.equals("sadness")) {
-                    if (scr % 0.001 >= 7)
+                    if (scr * 100 % 10 >= 7)
                         emo = "blues";
-                    else if (scr % 0.001 >= 5)
+                    else if (scr * 100 % 10 >= 5)
                         emo = "soul";
-                    else if (scr % 0.001 < 3)
+                    else if (scr * 100 % 10 < 3)
                         emo = "heartbreak";
                 }
                 if (emo.equals("disgust")) {
-                    if (scr % 0.001 >= 6)
+                    if (scr * 100 % 10 >= 6)
                         emo = "horror";
-                    else if (scr % 0.001 >= 3)
+                    else if (scr * 100 % 10 >= 3)
                         emo = "sick";
                 }
                 if (emo.equals("surprise")) {
-                    if (scr % 0.001 >= 6)
+                    if (scr * 100 % 10 >= 6)
                         emo = "wonder";
                 }
                 if (emo.equals("fear")) {
-                    if (scr % 0.001 >= 6)
+                    if (scr * 100 % 10 >= 6)
                         emo = "scare";
                 }
 
