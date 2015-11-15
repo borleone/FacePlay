@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#000000"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="Start"
+        android:layout_marginBottom="150dp"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/mybutton"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+    <TextView
+        android:layout_width="259dp"
+        android:layout_height="66dp"
+        android:text="Face Play"
+        android:id="@+id/textView2"
+        android:layout_alignRight="@+id/button"
+        android:layout_alignEnd="@+id/button"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Detect Mood" />
+        android:textColor="#4052b5"
+        android:textSize="50dp"
+        android:textAlignment="center"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="sans-serif-medium" />
 
 
-</LinearLayout>
+</FrameLayout>

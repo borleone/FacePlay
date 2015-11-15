@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#000000"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
 
@@ -11,39 +11,54 @@
 
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#FFFFFFFF" />
+        android:backgroundTint="#FFFFFF" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#000000"
+        android:background="#FFFFFF"
         android:layout_gravity="center"
-
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
 
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:background="@drawable/mybutton"
             android:text="New Photo"
-
-            android:visibility="visible" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="visible"
+            android:textColor="#ffffff"
+            android:textSize="30dp"/>
 
         <Button
+            android:textColor="#ffffff"
+            android:textSize="30dp"
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
+            android:background="@drawable/mybutton"
             android:text="Music"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
+
+
+
+
+
+
+
+
 
     </LinearLayout>
 </LinearLayout>
